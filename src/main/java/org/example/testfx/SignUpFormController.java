@@ -9,10 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -68,8 +65,6 @@ public class SignUpFormController implements Initializable {
         stage.show();
     }
     public void CheckDuplicate(ActionEvent event) throws IOException{
-
-
         String enterUserId = EnterUserId.getText().trim();
         if(enterUserId.isEmpty()){
             System.out.println("id:" + enterUserId);
@@ -155,7 +150,43 @@ public class SignUpFormController implements Initializable {
         // 연도와 월이 선택될 때마다 day 콤보박스 업데이트
         year.setOnAction(event -> updateDays());
         month.setOnAction(event -> updateDays());
+        middlePhoneNumber.setTextFormatter(new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            if (newText.matches("\\d*")) {
+                return change;
+            }
+            return null;
+        }));
+        lastPhoneNumber.setTextFormatter(new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            if (newText.matches("\\d*")) {
+                return change;
+            }
+            return null;
+        }));
+        EnterUserId.setTextFormatter(new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            if(newText.length() <= 11){
+                return change;
+            }
+            return null; // 길이가 11 초과이면 변경 거부
+        }));
 
+        // 비밀번호: 최대 8글자 제한
+        pwField.setTextFormatter(new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            if(newText.length() <= 8){
+                return change;
+            }
+            return null; // 길이가 8 초과이면 변경 거부
+        }));
+        pwcField.setTextFormatter(new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            if(newText.length() <= 8){
+                return change;
+            }
+            return null; // 길이가 8 초과이면 변경 거부
+        }));
     }
 
     private void updateDays() {
@@ -219,15 +250,9 @@ public class SignUpFormController implements Initializable {
         }
         // 학교 선택 검증 (schoolMap에 없으면 오류 메시지에 추가)
         String selectedText = schoolField.getText().trim();
-        int schoolId = 0;
-        if (schoolMap.containsKey(selectedText)) {
-            schoolId = schoolMap.get(selectedText);
-            System.out.println("선택된 SchoolID: " + schoolId);
-            // userData에 해당 학교 ID를 String 형태로 추가
-        } else {
-            // 학교 선택이 올바르지 않으면 errorMessage에 누락 메시지 추가
-            errorMessage += "학교명을 올바르게 선택해주세요.\n";
-            // 그리고 임시로 아무 값도 추가하지 않도록 처리하거나, 이후 처리에서 걸러낼 수 있음
+        int schoolId = searchSchoolId(selectedText);
+        if(schoolField.getText().trim().equals("")){
+           errorMessage = "학교명을 입력해주세요.";
         }
         if (!pwField.getText().equals(pwcField.getText())){
             errorMessage = "비밀번호가 일치하지않습니다.";
@@ -243,21 +268,58 @@ public class SignUpFormController implements Initializable {
             alert.setContentText(errorMessage);
             alert.show();
         } else {
-
             userData.add(EnterUserId.getText());
             userData.add(nameField.getText());
             userData.add(pwField.getText());  // 보통 암호는 pwField.getText()를 사용
             userData.add(emailFront.getText() + "@" + emailDomain.getValue());
             userData.add(firstPhoneNumber.getValue() + "-" + middlePhoneNumber.getText() + "-" + lastPhoneNumber.getText());
             userData.add(String.valueOf(schoolId));
-            userData.add(year.getValue() + "-" + month.getValue() + "-" + day.getValue());
+            userData.add(year.getValue() + "/" + month.getValue() + "/" + day.getValue());
             userData.add("Student");
             // 모든 필드가 입력되었다면 가입 처리 진행
             submitSql(userData);
-            // 가입 처리 관련 로직 추가
-            System.out.println("가입되었습니다.");
+            // 가입 성공 메시지와 함께 Alert 창으로 알린 후 창 닫기
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("가입 완료");
+            alert.setHeaderText(null);
+            alert.setContentText("가입되었습니다.");
+            alert.showAndWait();
+
+            // 로그인 창 띄우기
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("Main.fxml"));
+                Parent loginRoot = loader.load();
+                Stage loginStage = new Stage();
+                loginStage.setTitle("로그인");
+                loginStage.setScene(new Scene(loginRoot));
+                loginStage.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            // 현재 창(Stage)을 가져와서 닫음
+            Stage stage = (Stage) schoolField.getScene().getWindow();
+            stage.close();
 
         }
+    }
+
+    private int searchSchoolId(String selectedText) {
+        Connection connection = Connect.connect_DB("cbt2");
+        String sql = "select schoolId from school where schoolName = ?";
+        try(PreparedStatement pstmt = connection.prepareStatement(sql)){
+            pstmt.setString(1, selectedText);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    int id = rs.getInt("SchoolID");
+                    return id;
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return 0;
     }
 
 
@@ -283,5 +345,55 @@ public class SignUpFormController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public void searchSchool(ActionEvent event) {
+        String keyword  = schoolField.getText().trim();
+        List<List<String>> searchResults = searchSchoolDB(keyword);
+        if (searchResults.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("검색 결과");
+            alert.setHeaderText(null);
+            alert.setContentText("일치하는 학교명이 없습니다.");
+            alert.showAndWait();
+        } else {
+            // ChoiceDialog를 사용하여 검색 결과 목록에서 선택하도록 함
+            ChoiceDialog<List<String>> dialog = new ChoiceDialog<>(searchResults.get(0), searchResults);
+            dialog.setTitle("학교 선택");
+            dialog.setHeaderText("검색된 학교 목록");
+            dialog.setContentText("학교 선택:");
+
+            Optional<List<String>> result = dialog.showAndWait();
+            result.ifPresent(selected -> {
+                String schoolName = selected.get(1);
+                schoolField.setText(schoolName);
+            });
+        }
+    }
+
+    private List<List<String>> searchSchoolDB(String keyword) {
+        Connection conn = Connect.connect_DB("cbt2");
+        String sql = "select * from school where schoolName like ?";
+        List<List<String>> schools = new ArrayList<>();
+        try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setString(1, "%" + keyword + "%");
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    int id = rs.getInt("SchoolID");
+                    String name = rs.getString("SchoolName");
+                    String address = rs.getString("address");
+
+                    List<String> data = new ArrayList<>();
+                    data.add(String.valueOf(id));
+                    data.add(name);
+                    data.add(address);
+                    schools.add(data);
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return schools;
     }
 }

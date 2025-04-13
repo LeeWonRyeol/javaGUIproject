@@ -10,7 +10,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="356.0" prefWidth="609.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="org.example.testfx.MainController" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="356.0" prefWidth="609.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.testfx.MainController">
    <children>
       <Button layoutX="417.0" layoutY="165.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="98.0" style="-fx-background-color: #000; -fx-cursor: hand;" text="Login" textFill="WHITE" />
       <Label layoutX="244.0" layoutY="68.0" prefHeight="56.0" prefWidth="112.0" text="CBT">
@@ -47,6 +47,6 @@
       <TextField layoutX="182.0" layoutY="167.0" prefHeight="30.0" prefWidth="222.0" />
       <TextField layoutX="182.0" layoutY="205.0" prefHeight="30.0" prefWidth="222.0" />
       <Button id="btnSignUp" layoutX="181.0" layoutY="256.0" mnemonicParsing="false" onAction="#OpenSignUpForm" prefHeight="30.0" prefWidth="112.0" style="-fx-background-color: blue; -fx-cursor: hand;" text="회원가입" textFill="WHITE" />
-      <Hyperlink layoutX="304.0" layoutY="260.0" prefHeight="22.0" prefWidth="211.0" text="아이디/비밀번호를 잊어버리셨나요?" textFill="RED" />
+      <Hyperlink layoutX="304.0" layoutY="260.0" onAction="#OpenFindInfoForm" prefHeight="22.0" prefWidth="211.0" text="아이디/비밀번호를 잊어버리셨나요?" textFill="RED" />
    </children>
 </AnchorPane>

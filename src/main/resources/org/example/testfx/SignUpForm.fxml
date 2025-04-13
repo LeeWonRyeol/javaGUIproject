@@ -32,7 +32,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="pwFeild" layoutX="145.0" layoutY="179.0" prefHeight="28.0" prefWidth="191.0" promptText="4자리 이상" />
+      <TextField fx:id="pwField" layoutX="145.0" layoutY="179.0" prefHeight="28.0" prefWidth="191.0" promptText="4자리 이상" />
       <Label layoutX="29.0" layoutY="210.0" prefHeight="34.0" prefWidth="116.0" text="비밀번호 확인">
          <font>
             <Font size="18.0" />
@@ -62,20 +62,20 @@
             <Font size="23.0" />
          </font>
       </Label>
-      <TextField fx:id="seco" layoutX="230.0" layoutY="281.0" prefHeight="28.0" prefWidth="78.0" />
+      <TextField fx:id="middlePhoneNumber" layoutX="230.0" layoutY="281.0" prefHeight="28.0" prefWidth="78.0" />
       <Label layoutX="311.0" layoutY="281.0" prefHeight="28.0" prefWidth="13.0" text="-">
          <font>
             <Font size="23.0" />
          </font>
       </Label>
-      <TextField fx:id="schoolFeild" layoutX="324.0" layoutY="281.0" prefHeight="28.0" prefWidth="96.0" />
+      <TextField fx:id="lastPhoneNumber" layoutX="324.0" layoutY="281.0" prefHeight="28.0" prefWidth="96.0" />
       <Label layoutX="78.0" layoutY="312.0" prefHeight="34.0" prefWidth="57.0" text="학교명">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField layoutX="144.0" layoutY="315.0" prefHeight="28.0" prefWidth="131.0" />
-      <Button layoutX="285.0" layoutY="315.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="78.0" text="검색" />
+      <TextField fx:id="schoolField" layoutX="144.0" layoutY="315.0" prefHeight="28.0" prefWidth="131.0" />
+      <Button fx:id="btnSchoolSearch" layoutX="285.0" layoutY="315.0" mnemonicParsing="false" onAction="#searchSchool" prefHeight="28.0" prefWidth="78.0" text="검색" />
       <Label layoutX="57.0" layoutY="346.0" prefHeight="34.0" prefWidth="78.0" text="생년월일">
          <font>
             <Font size="18.0" />
