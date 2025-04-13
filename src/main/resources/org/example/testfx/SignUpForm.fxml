@@ -19,56 +19,56 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField layoutX="145.0" layoutY="107.0" prefHeight="28.0" prefWidth="116.0" promptText="이름을 입력하세요" />
+      <TextField fx:id="nameField" layoutX="145.0" layoutY="107.0" prefHeight="28.0" prefWidth="116.0" promptText="이름을 입력하세요" />
       <Label layoutX="78.0" layoutY="142.0" prefHeight="34.0" prefWidth="57.0" text="아이디">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField id="EnterUserId" layoutX="145.0" layoutY="145.0" prefHeight="28.0" prefWidth="191.0" promptText="소문자 영문,숫자 7 ~ 11 자리" />
+      <TextField fx:id="EnterUserId" layoutX="145.0" layoutY="145.0" onKeyPressed="#newInput" prefHeight="28.0" prefWidth="191.0" promptText="소문자 영문,숫자 7 ~ 11 자리" />
       <Button layoutX="344.0" layoutY="145.0" mnemonicParsing="false" onAction="#CheckDuplicate" prefHeight="28.0" prefWidth="78.0" text="중복확인" />
       <Label layoutX="67.0" layoutY="176.0" prefHeight="34.0" prefWidth="78.0" text="비밀번호">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField layoutX="145.0" layoutY="179.0" prefHeight="28.0" prefWidth="191.0" promptText="4자리 이상" />
+      <TextField fx:id="pwFeild" layoutX="145.0" layoutY="179.0" prefHeight="28.0" prefWidth="191.0" promptText="4자리 이상" />
       <Label layoutX="29.0" layoutY="210.0" prefHeight="34.0" prefWidth="116.0" text="비밀번호 확인">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField layoutX="145.0" layoutY="213.0" prefHeight="28.0" prefWidth="191.0" />
+      <TextField fx:id="pwcField" layoutX="145.0" layoutY="213.0" prefHeight="28.0" prefWidth="191.0" />
       <Label layoutX="74.0" layoutY="244.0" prefHeight="34.0" prefWidth="65.0" text="E-Mail">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField layoutX="145.0" layoutY="247.0" prefHeight="28.0" prefWidth="78.0" />
+      <TextField fx:id="emailFront" layoutX="145.0" layoutY="247.0" prefHeight="28.0" prefWidth="78.0" />
       <Label layoutX="229.0" layoutY="247.0" prefHeight="28.0" prefWidth="24.0" text="\@">
          <font>
             <Font size="23.0" />
          </font>
       </Label>
-      <ComboBox layoutX="253.0" layoutY="247.0" prefHeight="28.0" prefWidth="116.0" />
+      <ComboBox fx:id="emailDomain" layoutX="253.0" layoutY="247.0" prefHeight="28.0" prefWidth="116.0" />
       <Label layoutX="57.0" layoutY="278.0" prefHeight="34.0" prefWidth="78.0" text="전화번호">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <ComboBox layoutX="145.0" layoutY="281.0" prefHeight="28.0" prefWidth="65.0" />
+      <ComboBox fx:id="firstPhoneNumber" layoutX="145.0" layoutY="281.0" prefHeight="28.0" prefWidth="65.0" />
       <Label layoutX="217.0" layoutY="281.0" prefHeight="28.0" prefWidth="13.0" text="-">
          <font>
             <Font size="23.0" />
          </font>
       </Label>
-      <TextField layoutX="230.0" layoutY="281.0" prefHeight="28.0" prefWidth="78.0" />
+      <TextField fx:id="seco" layoutX="230.0" layoutY="281.0" prefHeight="28.0" prefWidth="78.0" />
       <Label layoutX="311.0" layoutY="281.0" prefHeight="28.0" prefWidth="13.0" text="-">
          <font>
             <Font size="23.0" />
          </font>
       </Label>
-      <TextField layoutX="324.0" layoutY="281.0" prefHeight="28.0" prefWidth="96.0" />
+      <TextField fx:id="schoolFeild" layoutX="324.0" layoutY="281.0" prefHeight="28.0" prefWidth="96.0" />
       <Label layoutX="78.0" layoutY="312.0" prefHeight="34.0" prefWidth="57.0" text="학교명">
          <font>
             <Font size="18.0" />
@@ -81,10 +81,55 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <ComboBox layoutX="145.0" layoutY="349.0" prefHeight="28.0" prefWidth="78.0" />
-      <ComboBox layoutX="237.0" layoutY="349.0" prefHeight="28.0" prefWidth="65.0" />
-      <ComboBox layoutX="312.0" layoutY="349.0" prefHeight="28.0" prefWidth="65.0" />
-      <Button layoutX="145.0" layoutY="399.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="96.0" style="-fx-background-color: #000;" text="가입하기" textFill="WHITE" />
+      <ComboBox fx:id="year" layoutX="145.0" layoutY="349.0" prefHeight="28.0" prefWidth="78.0" />
+      <ComboBox fx:id="month" layoutX="237.0" layoutY="349.0" prefHeight="28.0" prefWidth="65.0" />
+      <ComboBox fx:id="day" layoutX="312.0" layoutY="349.0" prefHeight="28.0" prefWidth="65.0" />
+      <Button fx:id="submitBtn" layoutX="145.0" layoutY="399.0" mnemonicParsing="false" onAction="#submit" prefHeight="28.0" prefWidth="96.0" style="-fx-background-color: #000;" text="가입하기" textFill="WHITE" />
       <Button layoutX="253.0" layoutY="399.0" mnemonicParsing="false" onAction="#Back" prefHeight="28.0" prefWidth="72.0" style="-fx-background-color: #ff0000;" text="취소" textFill="WHITE" />
+      <Label layoutX="269.0" layoutY="110.0" prefHeight="28.0" prefWidth="24.0" text="*" textFill="RED">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="426.0" layoutY="148.0" prefHeight="28.0" prefWidth="24.0" text="*" textFill="RED">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="344.0" layoutY="183.0" prefHeight="28.0" prefWidth="24.0" text="*" textFill="RED">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="344.0" layoutY="216.0" prefHeight="28.0" prefWidth="24.0" text="*" textFill="RED">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="374.0" layoutY="248.0" prefHeight="28.0" prefWidth="24.0" text="*" textFill="RED">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="426.0" layoutY="283.0" prefHeight="28.0" prefWidth="24.0" text="*" textFill="RED">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="386.0" layoutY="349.0" prefHeight="28.0" prefWidth="24.0" text="*" textFill="RED">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="153.0" layoutY="70.0" prefHeight="28.0" prefWidth="406.0" text="* 는 필수로 입력해야하는 부분입니다." textFill="RED">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label layoutX="371.0" layoutY="318.0" prefHeight="28.0" prefWidth="24.0" text="*" textFill="RED">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

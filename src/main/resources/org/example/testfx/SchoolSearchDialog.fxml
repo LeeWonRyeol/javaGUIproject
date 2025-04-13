@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.testfx.SchoolSearchDialogController">
+    <top>
+        <!-- 검색어 입력 -->
+        <TextField fx:id="searchField" promptText="학교명을 입력하세요" BorderPane.alignment="CENTER"/>
+    </top>
+    <center>
+        <!-- 검색 결과를 보여줄 ListView -->
+        <ListView fx:id="resultListView" prefHeight="200.0" prefWidth="300.0"/>
+    </center>
+    <bottom>
+        <!-- 선택/취소 버튼 -->
+        <HBox spacing="10" alignment="CENTER" padding="10">
+            <Button text="선택" onAction="#selectSchool" fx:id="selectButton"/>
+            <Button text="취소" onAction="#onCancel"/>
+        </HBox>
+    </bottom>
+</BorderPane>
